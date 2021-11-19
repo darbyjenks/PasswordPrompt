@@ -5,7 +5,8 @@ var lowerArray = lowerString.split("");
 var upperString = lowerString.toUpperCase();
 var upperArray = upperString.split("");
 var specialArray = ["@", "!", "#"];
-var totalArray = []
+var totalArray = [];
+var results=[];
 //grabs button from html page
 var generateBtn = document.querySelector("#generate");
 function askUser() {
@@ -14,10 +15,10 @@ function askUser() {
     alert("Password length is not valid");
     return askUser();
   }
-  var isLower=true;
-  var isUpper=true;
-  var isNum=true;
-  var isSpecial=true;
+  var isLower=window.confirm("Would you like lower case letters?");
+  var isUpper=window.confirm("Would you like upper case letters?");
+  var isNum=window.confirm("Would you like numbers?");
+  var isSpecial=window.confirm("Would you like to use special characters?");
   if(isLower===true){
     totalArray=totalArray.concat(lowerArray);
   }
@@ -30,11 +31,20 @@ function askUser() {
   if(isSpecial===true){
     totalArray=totalArray.concat(specialArray);
   }
+  if (totalArray.length===0){
+    window.alert("No type selected.");
+    return askUser();
+  }
 return {totalArray, passLength}
 }
 function generatePassword() {
-  askUser()
-  return "dklsfjkdlsjf"
+  var data = askUser();
+  for (var i=0; i<data.passLength; i++){
+    var index=Math.floor(Math.random()*data.totalArray.length);
+    var digit=totalArray[index];
+  results.push(digit);
+  }
+  return results.join("");
 }
 
 // Write password to the #password input
